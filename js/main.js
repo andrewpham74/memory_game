@@ -1,9 +1,3 @@
-// var cardOne = "queen";
-// var cardTwo = "queen";
-// var cardThree = "king";
-// var cardFour = "king";
-
-// var cards = ["queen", "queen", "king", "king"];
 
 var cards = [
 {
@@ -32,10 +26,47 @@ cardImage: "images/king-of-diamonds.png"
 
 ];
 
-
 var cardsInPlay = [];
 
+
+// var flipcard = function () {
+
+function flipCard() {
+	var cardId = this.getAttribute('data-id');
+
+	cardsInPlay.push(cards[cardId].rank);
+	this.setAttribute("src", cards[cardId].cardImage);
+
+	console.log("User flipped " + cards[cardId].rank);
+	console.log(cards[cardId].cardImage);
+	console.log(cards[cardId].suit);
+
+	checkForMatch();
+
+}
+
+// var createBoard = function (){
+function createBoard() {
+	var board = document.getElementById("game-board");
+    
+    for (var i = 0; i < cards.length; i++) {
+    	
+    	var cardElement = document.createElement('img');
+    	
+    	cardElement.setAttribute("src", "images/back.png");
+    	cardElement.setAttribute('data-id', i);
+    	cardElement.addEventListener("click", flipCard);
+    	board.appendChild(cardElement);	
+	}
+
+}
+
+// var checkForMatch = function (){
 function checkForMatch(){
+
+	// cardElement.setAttribute(cards[cardId].cardImage);
+	// this.setAttribute("src", cards[cardId].cardImage);
+
 	
 	if (cardsInPlay.length === 2){
 
@@ -49,30 +80,25 @@ function checkForMatch(){
 	}
 
 }
-// var cardOne = cards[0];
-// var cardTwo = cards[1];
-// var cardThree = cards[2];
-// var cardFour = cards[3];
 
-// cardsInPlay.push(cardOne); //?
-// cardsInPlay.push(cardTwo); //?
-// cardsInPlay.push(cardThree); //?
-// cardsInPlay.push(cardFour); //?
 
-function flipCard(cardId) {
+createBoard();
 
-	console.log("User flipped " + cards[cardId].rank);
-	console.log(cards[cardId].cardImage);
-	console.log(cards[cardId].suit);
-	cardsInPlay.push(cards[cardId].rank)
-	checkForMatch();
+function resetGame() {
+	cardsInPlay = [];
 
-	
+	var board = document.getElementById("game-board");
 
-}
+	while (board.hasChildNodes()) {
+		board.removeChild(board.lastChild);
+	}
 
-flipCard(0);
-flipCard(2);
+	createBoard();
+};
+
+// resetGame();
+// flipCard(0);
+// flipCard(2);
 
 
 
